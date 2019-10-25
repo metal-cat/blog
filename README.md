@@ -1,2 +1,2 @@
 # metal-cat.github.io
-Welcome
+This is an inoperable static test page.

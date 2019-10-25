@@ -1,11 +1,169 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Metal Cat</title>
+    <!--Browser-->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    
+    <!-- Vars -->
+    <title>Metal Cat</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    
+    <!--Other/Style-->
+    <meta name="screen-orientation" content="portrait">
+    <meta name="imagemode" content="force">
+    <meta name="browsermode" content="application">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <meta name="full-screen" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="black">
+    <meta name="author" content="Metal Cat">
+    <meta name="email" content="metalcat.me@gmail.com">
+    <link rel="icon" href="images/tomb-fox.png">
+    <link class="vro3-css" rel="stylesheet" href="images/style.css">
+    <link rel="stylesheet" href="images/icons.css">
     </head>
-    <body>
-        Welcome!!!
-        <a style="color:#00a09d">LTB</a>
+<body data-platfrom="Windows" data-mobile="false" data-browser="Chrome" data-brand="Chrome" class="inited completed" data-performance="true">
 
-    </body>
+<div class="fxd r t b d1 color-light no-select" id="drop-side" style="width: 60px; z-index:999; " dropzone="true"></div>
+
+<a class="fxd t r bg-dark color-active d2 top-index" id="fullscreen" data-action="fullscreen">
+    <i class="iconfont icon-fullscreen"></i>
+    <i class="iconfont icon-fullscreen-exit"></i>
+</a>
+
+<div class="fxd b r top-index no-select" id="tools-button" data-drop="tools" draggable="true">
+    <a id="go-up" class="font-gray font-hover font-active hide" title="Go-up">
+      <i class="iconfont icon-up font-anim1"></i>  
+    </a>
+    <a id="toggle-performance" data-action="performance" class="font-gray d2 font-hover font-active">
+      <i class="iconfont icon-performance font-anim1"></i>  
+    </a>
+</div>
+
+<div class="fxd full no-select" id="mask" onclick="void(0);" data-action="nav:close"></div>
+
+<div class="fxd full ofy d2" id="warp">
+    <a id="menu-btn" class="fxd btn iconfont no-select icon-menu" data-action="nav:open"></a>
+    <aside class="fxd l t b bg-dark ofy grad-dark scroll2 d2 no-select" data-scroll="y" id="nav">
+        <div id="logo">
+            <i class="iconfont icon-loading"></i>
+            <i class="iconfont icon-tomb-fox"></i>
+            <i class="icon-tombfox font-color">Metal Cat</i>
+        </div>
+        <div id="nav-container" ondragstart="return false" class="iconfont">
+            <div id="user-data" class="icon-mail"> <a href="mailto:metalcat.me@gmail.com">metalcat.me@gmail.com</a></div>
+            <nav data-nav="home" data-text="Test menu 1" class="open">
+                <h3 class="color-hover light-bg active-anim d2"><i class="icon-down"></i> Test menu 1</h3>
+                <ul class="color-dark">
+                    <li data-group="home" data-key="index" class="nowrap font-light color-hover d2 focus icon-home"> Homepage</li>
+                    <li data-group="home" data-key="recharge" class="nowrap font-light color-hover d2 icon-trade"> Trade</li>
+                    <li data-group="home" data-key="settle" class="nowrap font-light color-hover d2 icon-message"> Message</li>
+                </ul>
+            </nav>
+            <nav data-nav="data" data-text="Test menu 2" class="open">
+                <h3 class="color-hover light-bg active-anim d2"><i class="icon-data"></i> Test menu 2</h3>
+                <ul class="color-dark">
+                    <li data-group="data" data-key="trade?state=1" class="nowrap font-light color-hover d2 icon-article"> News</li>
+                    <li data-group="data" data-key="user" class="nowrap font-light color-hover d2 icon-user"> Users</li>
+                    <li data-group="data" data-key="payments" class="nowrap font-light color-hover d2 icon-wallet"> Recharge</li>
+                    <li data-group="data" data-key="card" class="nowrap font-light color-hover d2 icon-card"> Cards</li>
+                    <li data-group="data" data-key="child" class="nowrap font-light color-hover d2 icon-child"> Children</li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+    <main class="abs full ofy scroll1 color-scroll d2" id="container">
+<div class="nowrap bg-dark ofx scroll2 no-select iconfont" data-scroll="x" id="tag" ondragstart="return false">
+    <a class="btn btn-tag color-dark d2 open icon-home"> Homepage</a>
+    <a class="btn btn-tag color-dark d2 icon-nav"> Tab 2</a>
+    <a class="btn btn-tag color-dark d2 icon-setting"> Tab 3</a>
+    <a class="btn btn-tag color d2 icon-logout"> Logout</a>
+</div>
+
+<div class="tag-top border-color nowrap justify iconfont" ondragstart="return false">
+    <div class="iblock" id="position"><i class="big pipe flt-l icon-info"></i> This is an inoperable static test page.</div>
+    <div class="iblock">
+        <span class="font-gray font-hover icon-loading" data-action="reload" title="Reload" after="logo"></span>
+    </div>
+</div>
+
+
+<div id="N-HOME" state="1" class="content ofx iconfont after-icon form-column column no-select mag_t d3" count="auto" max="3">
+
+
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-user"> Author:</span>
+            <span class="iblock pointer light">Metal Cat</span>
+        </div>
+    </div>
+
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-notice"> Version:</span>
+            <span class="iblock highligh">1.0</span>
+        </div>
+    </div>
+
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-scan"> Label 3:</span>
+            <span class="iblock pointer light">Value 3</span>
+        </div>
+    </div>
+
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-editor"> Label 4:</span>
+            <span class="iblock light">
+                <i class="highligh">98</i> %
+            </span>
+        </div>
+    </div>
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-delete"> Label 5:</span>
+            <span class="iblock pointer light">Value 5</span>
+        </div>
+    </div>
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-search"> Label 6:</span>
+            <span class="iblock pointer light">Value 6</span>
+        </div>
+    </div>
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-shoping-car"> Label 7:</span>
+            <span class="iblock pointer light">Value 7</span>
+        </div>
+    </div>
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-phone"> Label 8:</span>
+            <span class="iblock pointer light">Value 8</span>
+        </div>
+    </div>
+    <div class="form-item column-child">
+        <div class="justify spad pad_x mag b-line border-color d2 hover">
+            <span class="iblock icon-confirm"> Label 9:</span>
+            <span class="iblock pointer light">Value 9</span>
+        </div>
+    </div>
+
+</div>
+</main>
+</div>
+<script src="js/main.js"></script>
+<div class="fxd t r b l vBoxs" id="vro3-box"></div>
+
+</body>
 </html>

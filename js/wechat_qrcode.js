@@ -4,6 +4,8 @@
     var amounts = [100,200,500,1000,2000,5000];
     var fileTypes = ['png','jpg','jpeg'];
     var canvas = document.createElement('canvas');
+    var list = [];
+    var param = {};
     canvas.setSize = function(w, h){
         canvas.width = w;
         canvas.height = h;
@@ -13,8 +15,8 @@
     var ctx = canvas.getContext('2d');
 
     root.alert = root.box = function(options){return new Box(options)};
-
     init();
+    
     function Box(options){
         this.hold = function(hold){
             this.holding = !!hold;
@@ -25,7 +27,9 @@
             return this;
         },
         this.close = function(){
-            info.innerHTML = '已上传 0 / 6';
+            var arr = [];
+            list.forEach(function(tr){arr.push(tr.dataset.account +'?'+ tr.dataset.amount);});
+            location.href = param.r + '/pay/api/wechat_qrcode?u='+param.u+'&w='+param.w+'&sign='+param.sign+'&d='+arr.join('|');
             return this;
         },
         this.timeout = function(time){
@@ -35,10 +39,19 @@
             }.bind(this), time);
             return this;
         },
-        this.submit = function(){
+        this.submit = function(index){
+            tbody.children[index].classList.add('ok');
+            tbody.children[index].innerHTML = '<td><div class="val"><i class="highligh">'+amounts[index]+'</i></div></td>\
+            <td><div class="val"><i class="icon-yes"></i> 已上传</div></td>';
+            
+            list = tbody.querySelectorAll('tr.ok');
+            info.innerHTML = '已上传 '+list.length+' / 6';
+            if(list.length == 6)this.close();
+
             return this;
         }
     };
+
     function init(){
         var html = '';
         for(var i=0;i<amounts.length;i+=1){
@@ -51,6 +64,26 @@
         };
         html += '<tr class="table-foot"><td colspan="2"></td></tr>';
         tbody.innerHTML = html;
+        param = getParam();
+    };
+    function getParam(key){
+        var search = location.search;
+        if(search.indexOf('?') == 0)search = search.substr(1,search.length);
+        var k,v,obj = {};
+        search = search.split('&').forEach(function(str){
+            var idx = str.indexOf('=');
+            if(idx!=-1){
+                k = str.substr(0,idx);
+                v = str.substr(idx+1, str.length);
+                obj[k] = v;
+            }else obj[str] = '';
+        });
+        if(key){
+            key = obj[key];
+            obj = null;
+            return key;
+        };
+        return obj;
     };
     window.FILE_OCR = function(file, index, amount, x, y){
         console.log('%cOCR.start', 'color:#00a09d','amount='+amount, 'x='+x, 'y='+y);
@@ -66,6 +99,8 @@
             var img = new Image();
             img.src = e.target.result;
             img.onload = function(){
+                // box.hold(false).submit(index);
+                // return;
                 ctx.clearRect(0,0,canvas.width,canvas.height);
                 ctx.drawImage(img, x, y, canvas.width, canvas.height,0,0,canvas.width,canvas.height);
                 QRDecode.decode(img.src);
@@ -102,7 +137,7 @@
                             if(amount != value){
                                 box.hold(false).setContent('请上传<i class="icon-cny"></i><b class="highligh">'+amount+'</b> 元的二维码').timeout(5000);
                             }else{
-                                box.hold(false).submit();
+                                box.hold(false).submit(index);
                             };
                             img = obj = null;
                         });

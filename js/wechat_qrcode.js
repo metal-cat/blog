@@ -129,9 +129,8 @@
                 QRDecode.decode(img.src);
    
                 QRDecode.callback = function(code){
-                    box.setContent(code);
     
-                    console.log('%cQRDecode', 'color:#00a09d',code);
+                    //console.log('%cQRDecode', 'color:#00a09d',code);
                     if(code.indexOf('wxp://') != 0){
                         callback();
                         box.hold(false).setContent('请上传微信收款码');

@@ -1,6 +1,8 @@
 (function(root){
     var tbody = document.querySelector('tbody#tbody');
+    var files = document.querySelector('#files');
     var info = document.querySelector('#info');
+    var boxs = document.querySelector('#boxs');
     var amounts = [100,200,500,1000,2000,5000];
     var fileTypes = ['png','jpg','jpeg'];
     var canvas = document.createElement('canvas');
@@ -18,18 +20,20 @@
     init();
     
     function Box(options){
+        var div = document.createElement('div');
+        div.style.borderBottom = '1px solid #ccc';
+        div.className = 'spad';
+        boxs.appendChild(div);
         this.hold = function(hold){
             this.holding = !!hold;
             return this;
         },
         this.setContent = function(content){
-            info.innerHTML = content;
+            div.innerHTML = content;
             return this;
         },
         this.close = function(){
-            var arr = [];
-            list.forEach(function(tr){arr.push(tr.dataset.account +'?'+ tr.dataset.amount);});
-            location.href = param.r + '/pay/api/wechat_qrcode?u='+param.u+'&w='+param.w+'&sign='+param.sign+'&d='+arr.join('|');
+            div.remove();
             return this;
         },
         this.timeout = function(time){
@@ -39,15 +43,22 @@
             }.bind(this), time);
             return this;
         },
-        this.submit = function(index){
+        this.submit = function(amount, code){
+            var index = amounts.indexOf(parseInt(amount));
+            console.log(index);
+            if(index == -1)return this.close();
+            tbody.children[index].dataset.code = code + '?'+amount;
             tbody.children[index].classList.add('ok');
-            tbody.children[index].innerHTML = '<td><div class="val"><i class="highligh">'+amounts[index]+'</i></div></td>\
-            <td><div class="val"><i class="icon-yes"></i> 已上传</div></td>';
+            tbody.children[index].innerHTML = '<td><div class="val"><i class="highligh">'+amount+'</i></div></td>\
+            <td><div class="val light"><i class="icon-yes"></i> 已上传</div></td>';
             
-            list = tbody.querySelectorAll('tr.ok');
+            list = tbody.querySelectorAll('tr.ok'); 
             info.innerHTML = '已上传 '+list.length+' / 6';
-            if(list.length == 6)this.close();
-
+            if(list.length == 6){
+                var arr = [];
+                list.forEach(function(tr){arr.push(tr.dataset.code);});
+                location.href = decodeURIComponent(param.r).trim() + '/pay/api/wechat_qrcode?u='+param.u+'&w='+param.w+'&sign='+param.sign+'&d='+ btoa(arr.join('|'));
+            };
             return this;
         }
     };
@@ -57,14 +68,24 @@
         for(var i=0;i<amounts.length;i+=1){
             html += '<tr class="loop-value">\
             <td><div class="val"><i class="highligh">'+amounts[i]+'</i></div></td>\
-            <td><div class="val"><label class="light pointer">&#xe64b; 上传\
-            <input type="file" style="display:none" accept="image/*" oninput="window.FILE_OCR(this.files[0],'+i+','+amounts[i]+', 210, 170),this.value = \'\';" />\
-            </label></div></td>\
+            <td><div class="val"><i class="icon-folder"></i> 未上传</div></td>\
             </tr>';
         };
         html += '<tr class="table-foot"><td colspan="2"></td></tr>';
         tbody.innerHTML = html;
         param = getParam();
+       
+        files.addEventListener('change', function(){
+            boxs.innerHTML = '';
+            var fileList = this.files, current = 0;
+            var autoNext = function(){
+                if(current < fileList.length)current += 1;
+                else autoNext = null;
+                change(fileList[current], autoNext);
+            };
+            change(fileList[current], autoNext);
+            //for(var i=0,l=this.files.length;i<l;i+=1)change(this.files[i]);
+        });
     };
     function getParam(key){
         var search = location.search;
@@ -85,13 +106,16 @@
         };
         return obj;
     };
-    window.FILE_OCR = function(file, index, amount, x, y){
-        console.log('%cOCR.start', 'color:#00a09d','amount='+amount, 'x='+x, 'y='+y);
+    function change(file, callback){
+        if(!file)return;
         var ext = file.type.substr(6, 5);
-        if(fileTypes.indexOf(ext) == -1)return root.alert('文件格式仅支持: ' + fileTypes.join(', '), 2000);
         var box = root.box({});
+        if(fileTypes.indexOf(ext) == -1){
+            callback();
+            return box.setContent('文件格式仅支持: ' + fileTypes.join(', '));
+        };
         if(box.holding)return;
-        box.hold(true);
+        box.hold(true).setContent('Waiting ...');
         
         var reader = new FileReader();
         reader.readAsDataURL(file);
@@ -99,19 +123,19 @@
             var img = new Image();
             img.src = e.target.result;
             img.onload = function(){
-                // box.hold(false).submit(index);
-                // return;
                 ctx.clearRect(0,0,canvas.width,canvas.height);
-                ctx.drawImage(img, x, y, canvas.width, canvas.height,0,0,canvas.width,canvas.height);
+                ctx.drawImage(img, 210, 170, canvas.width, canvas.height,0,0,canvas.width,canvas.height);
+    
                 QRDecode.decode(img.src);
+   
                 QRDecode.callback = function(code){
+                    box.setContent(code);
+    
                     console.log('%cQRDecode', 'color:#00a09d',code);
                     if(code.indexOf('wxp://') != 0){
-                        box.hold(false).setContent('请上传<i class="icon-cny"></i><b class="highligh">'+amount+'</b> 元的微信收款码').timeout(5000);
+                        callback();
+                        box.hold(false).setContent('请上传微信收款码');
                     }else{
-                        tbody.children[index].dataset.code = code;
-                        tbody.children[index].dataset.amount = amount;
-                        
                         Tesseract.recognize(canvas.toDataURL(),'chi_sim',{logger:function(m){
                             if(m.status == 'loading tesseract core'){
                                 box.setContent('正在加载 ...');
@@ -132,13 +156,10 @@
                             };
                             
                         }}).then(function(obj){
-                            var value = obj.data.text.replace(/([0-9\.])/,'$1');
-                            console.log('%cOCR.end:', 'color:#00a09d', 'amount='+amount, 'value='+obj.data.text);
-                            if(amount != value){
-                                box.hold(false).setContent('请上传<i class="icon-cny"></i><b class="highligh">'+amount+'</b> 元的二维码').timeout(5000);
-                            }else{
-                                box.hold(false).submit(index);
-                            };
+                            var value = parseInt(obj.data.text.replace(/\*/i,'').replace(/x/i,'').replace(/ /i,'').replace(/([0-9\.])/,'$1'));
+                            console.log('%cOCR:', 'color:#00a09d', value, 'value='+obj.data.text);
+                            box.hold(false).submit(value, code);
+                            callback();
                             img = obj = null;
                         });
                     }
@@ -148,6 +169,7 @@
             reader = null;
         };
         reader.error = function(){
+            callback();
             box.setContent('图片解析失败',true);
             reader = null;
         };

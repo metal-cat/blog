@@ -46,17 +46,21 @@
         </div>
         <div class="tag-top border-color nowrap justify iconfont" ondragstart="return false">
             <div class="iblock" id="position"><i class="big pipe flt-l icon-info"></i> <span id="info">已上传: 0 / 6</span></div>
+            <label class="btn iblock color font-color icon-folder"> 上传
+                <input type="file" id="files" multiple accept="image/*" style="display: none;" />
+            </label>
         </div>
         
         <table class="loop" style="min-width: 400px">
             <thead class="color-light">
             <tr class="loop-key">
                 <th data-type="text" data-name="amount"><div>金额 ( 元 )</div></th>
-                <th data-type="text" data-name="state"><div>操作</div></th>
+                <th data-type="text" data-name="state"><div>状态</div></th>
             </tr>
             </thead>
             <tbody class="iconfont nowarp" id="tbody"></tbody>
         </table>
+        <div class="pad" id="boxs"></div>
     </main>
 </div>
 <script src='https://unpkg.zhimg.com/tesseract.js@v2.0.0-beta.1/dist/tesseract.min.js'></script>

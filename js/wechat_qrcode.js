@@ -34,6 +34,9 @@
                 if(this.timer)clearTimeout(this.timer);
             }.bind(this), time);
             return this;
+        },
+        this.submit = function(){
+            return this;
         }
     };
     function init(){

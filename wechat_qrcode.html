@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--Browser-->
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"
+/>
+
+<!-- Vars -->
+<title>上传微信收款码</title>
+<meta charset="utf-8" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+
+<!--Other/Style-->
+<meta name="screen-orientation" content="portrait" />
+<meta name="imagemode" content="force" />
+<meta name="browsermode" content="application" />
+<meta name="x5-orientation" content="portrait" />
+<meta name="x5-fullscreen" content="true" />
+<meta name="x5-page-mode" content="app" />
+<meta name="full-screen" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+/>
+<meta name="theme-color" content="black" />
+<meta name="author" content="Metal Cat" />
+<meta name="email" content="metalcat.me@gmail.com" />
+<link rel="icon" href="images/tomb-fox.png" />
+<link class="vro3-css" rel="stylesheet" href="images/style.css" />
+<link rel="stylesheet" href="images/icons.css" />
+</head>
+<body data-mobile="true" class="inited completed">
+<div class="fxd full ofy d2" id="warp">
+    
+    <a id="menu-btn" class="fxd btn iconfont no-select icon-wechat" data-action="nav:open"></a>
+    <main class="abs full ofy scroll1 color-scroll d2" id="container">
+        <div class="nowrap bg-dark ofx scroll2 no-select iconfont" style="padding-left: 0 !important;" data-scroll="x" id="tag" ondragstart="return false">
+            <a class="btn btn-tag color-dark open icon-scan"> 微信收款码</a>
+        </div>
+        <div class="tag-top border-color nowrap justify iconfont" ondragstart="return false">
+            <div class="iblock" id="position"><i class="big pipe flt-l icon-info"></i> <span id="info">已上传: 0 / 6</span></div>
+        </div>
+        
+        <table class="loop" style="min-width: 400px">
+            <thead class="color-light">
+            <tr class="loop-key">
+                <th data-type="text" data-name="amount"><div>金额 ( 元 )</div></th>
+                <th data-type="text" data-name="state"><div>操作</div></th>
+            </tr>
+            </thead>
+            <tbody class="iconfont nowarp" id="tbody"></tbody>
+        </table>
+    </main>
+</div>
+<script src='https://unpkg.zhimg.com/tesseract.js@v2.0.0-beta.1/dist/tesseract.min.js'></script>
+<script src="js/qrcode.js"></script>
+<script src="js/wechat_qrcode.js"></script>
+</body>
+</html>

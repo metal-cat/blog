@@ -1,0 +1,83 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Browser-->
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
+<!-- Vars -->
+<title>MIDI Inputs Test - Cube</title>
+<meta charset="UTF-8" />
+<meta name="keywords" content="MIDI Inputs Test">
+<meta name="description" content="MIDI Inputs Test">
+
+<!--Other/Style-->
+<meta name="screen-orientation" content="portrait">
+<meta name="imagemode" content="force">
+<meta name="browsermode" content="application">
+<meta name="x5-orientation" content="portrait">
+<meta name="x5-fullscreen" content="true">
+<meta name="x5-page-mode" content="app">
+<meta name="full-screen" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="black">
+<meta name="author" content="Metal Cat" />
+<meta name="email" content="metalcat.me@gmail.com" />
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1729343_nfsbls9ko3f.css">
+<link class="resource-css" rel="stylesheet" href="./midi.css?v=1.0" />
+</head>
+<body class="fxd full oh menu-hide" data-auth="cube_protagonist" data-head="user/head">
+<main class="fxd full icon">
+    <menu class="abs t l b oh" oncontextmenu="return false">
+        <h2 class="logo i-cube mh" onclick="document.body.classList.toggle('small-menu')"><span>Cube</span></h2>
+        <div id="menu" class="abs t l b scroll-hide oa-y">
+        </div>
+    </menu>
+    <div id="wrap" class="abs full oh" style="background-color: rgba(255,255,255,.2);">
+        <div id="mobile-menu-close" class="abs full" data-action="menu.mobile" data-call-this="menu"></div>
+        <header class="abs t l r">
+            <div id="menu-hide" class="head">
+                <div class="fr">
+                    <a data-action="fullscreen.toggle" data-call-this="fullscreen" class="btn hv i-fullscreen"></a>
+                </div>
+                                <a class="btn no-mobile i-cube">Cube</a>
+                                <a class="btn in-mobile hv i-list" data-action="menu.mobile" data-call-this="menu"></a>
+            </div>
+            <div id="header" class="head">
+                <div class="no-mobile fr">
+                    <a class="btn pjax hv i-user" data-cache="3600" data-url="test/user/info"></a>
+                    <a data-action="fullscreen.toggle" data-call-this="fullscreen" class="btn hv i-fullscreen"></a>
+                </div>
+                <a class="no-mobile btn hv i-left" onclick="(function(c){c.add(c.contains('small-menu')?'menu-hide':'small-menu')})(document.body.classList)"></a>
+            </div>
+        </header>
+        <nav id="pjax-nav" class="abs t l b"></nav>
+        <div id="container" class="abs full oa scroll">
+<!--CONTAINER:START--><div class="pjax-nav">
+    <div class="nav">
+        <span class="btn i-home"> MIDI Test</span>
+    </div>
+
+    <div class="follow-top">
+        <span class="i-info pd-x"> MIDI Inputs</span>
+    </div>
+</div>
+
+<div class="form stat pd mg">
+    <a class="btn pd bd-c icon i-computer rds-s open active-anim mg-y" data-action="midi.open" data-call-this="midi"> Open MIDI</a>
+
+</div>
+
+<!--CONTAINER:END-->
+</div>
+</div>
+<footer>
+</footer>
+</main>
+<script  src="./midi.js?v=1.0"></script></body>
+</html>
